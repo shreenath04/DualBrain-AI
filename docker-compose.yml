@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+
+  app:
+    build: .
+    depends_on:
+      - mongodb
+      - ollama
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/
+      - OLLAMA_HOST=http://ollama:11434
+    stdin_open: true   # keeps terminal input alive (for input() calls)
+    tty: true          # allocates a pseudo-TTY (for getpass() calls)
+    restart: on-failure
+
+  mongodb:
+    image: mongo:7.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db   # persists your user database between runs
+
+  ollama:
+    image: ollama/ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ~/.ollama:/root/.ollama   # reuses your already downloaded models
+                                  # on a new device, pulls them automatically
+
+volumes:
+  mongo_data:

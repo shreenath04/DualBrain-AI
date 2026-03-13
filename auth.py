@@ -1,10 +1,12 @@
 import bcrypt
 from pymongo import MongoClient
 import datetime
+import os
 from getpass import getpass
 from traits_gen import generate_traits_from_description
 
-client = MongoClient("mongodb://localhost:27017/")
+# Reads MONGO_URI from environment — falls back to localhost for local dev
+client = MongoClient(os.getenv("MONGO_URI", "mongodb://localhost:27017/"))
 db = client["edgecloud_project"]
 
 users = db["users"]
@@ -127,8 +129,6 @@ def change_password(username: str):
 
 def login_loop():
     while True:
-        result  = login()
+        result = login()
         if result:
             return result
-
-# -------------------------------------

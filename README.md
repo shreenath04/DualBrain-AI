@@ -1,6 +1,17 @@
 # Persona-Adaptive-Edge-Cloud-LLM
 A dual-model AI assistant that adapts to user style and complexity, deciding in real time whether to run locally or in the cloud.
 
+```
+User Input
+    ↓
+[Gemma Router] — decides complexity
+    ↓              ↓
+[Local Model]  [Cloud Model]
+(Gemma 3:4B)  (LLaMA 3.1:8B)
+    ↓              ↓
+ Persona-shaped response → User
+```
+
 🔐 Current Deployment Note:
 Although the system supports real cloud execution, the “cloud model” is presently running locally via Ollama. This avoids unexpected token costs during development while preserving the same architectural behavior. Once deployed, the larger model can be swapped to a real cloud endpoint with zero code changes.
 
@@ -49,6 +60,7 @@ Database: MongoDB
 Auth: bcrypt hashing
 Execution: CLI-based UX
 
+Containerization: Docker + Docket Compose
 
 
 🔧 Future Work
